@@ -22,6 +22,14 @@ export const stepperSlice = createSlice({
     setActiveStep: (state, action) => {
       state.activeStep = action.payload;
     },
+    resetItems: state => {
+      state.items = initialItems;
+    },
+    toggleStepActiveStatus: (state, action) => {
+      const { name, value } = action.payload;
+      const selectedItem = state.items.find(item => item.key === name);
+      selectedItem.active = value;
+    },
   },
 });
 

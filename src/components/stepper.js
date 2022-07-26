@@ -14,19 +14,19 @@ const Stepper = () => {
     confirmation: "Confirmation",
   };
 
-  const items = steps.map(step => ({ ...step, label: stepLabels[step.key] }));
+  const items = steps
+    .filter(step => step.active)
+    .map(step => ({ ...step, label: stepLabels[step.key] }));
 
   return (
-    <div>
-      <h3>Stepper</h3>
-
+    <>
       <Steps
         model={items}
         activeIndex={activeIndex}
         onSelect={e => dispatch(actions.setActiveStep(e.index))}
         readOnly={false}
       />
-    </div>
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import { actions } from "../app/steps/slice";
 import { Button } from "primereact/button";
 import Stepper from "../components/stepper";
 import Toggles from "../components/toggles";
+import Controls from "../components/controls";
 
 const MultistepContainer = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,8 @@ const MultistepContainer = () => {
         <Route path='payment' element={<h1>PAYMENT</h1>} />
         <Route path='confirmation' element={<h1>CONFIRMATION</h1>} />
       </Routes>
+
+      <Controls />
     </div>
   );
 };

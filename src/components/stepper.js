@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { actions } from "../app/steps/slice";
@@ -9,6 +9,7 @@ const Stepper = () => {
   const navigate = useNavigate();
   const activeIndex = useSelector(state => state.steps.activeStep);
   const steps = useSelector(state => state.steps.items);
+  const items = useRef(null);
 
   const stepLabels = {
     personal: "Personal",
@@ -17,24 +18,30 @@ const Stepper = () => {
     confirmation: "Confirmation",
   };
 
-  const items = steps
+  items.current = steps
     .filter(step => step.active)
-    .map(step => ({ ...step, label: stepLabels[step.key] }));
+    .map(step => ({
+      ...step,
+      label: stepLabels[step.key],
+    }));
 
   useEffect(() => {
-    navigate(items[activeIndex] ? items[activeIndex].path : "/");
-  }, [steps, navigate, activeIndex]);
+    if (activeIndex + 1 > items.current.length && activeIndex !== 0) {
+      dispatch(actions.setActiveStep(items.current.length - 1));
+    }
+  }, [dispatch, activeIndex, items.current.length]);
+
+  useEffect(() => {
+    items.current[activeIndex] && navigate(items.current[activeIndex].path);
+  }, [navigate, activeIndex, items.current.length]);
 
   return (
     <>
       <Steps
-        model={items}
+        model={items.current}
         activeIndex={activeIndex}
         onSelect={e => {
-          console.log(e);
-
           dispatch(actions.setActiveStep(e.index));
-          navigate(e.item.path);
         }}
         readOnly={false}
       />

@@ -1,11 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialItems = [
-  { label: "one", key: "personal", path: "/personal", active: true },
-  { label: "two", key: "seat", path: "/seat", active: true },
-  { label: "three", key: "payment", path: "/payment", active: true },
+  { key: "personal", path: "/personal", active: true },
+  { key: "seat", path: "/seat", active: true },
+  { key: "payment", path: "/payment", active: true },
   {
-    label: "four",
     key: "confirmation",
     path: "/confirmation",
     active: true,
